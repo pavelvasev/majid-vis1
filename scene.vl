@@ -1,5 +1,10 @@
 Scene {
 
+  Text {
+    text: "Укажите данные:"
+    property var tag: "left"
+  }
+
   ///////// Data
   DataParam {
     file: Qt.resolvedUrl( "a.json")
