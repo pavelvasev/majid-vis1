@@ -1,0 +1,45 @@
+Scene {
+
+  ///////// Data
+  DataParam {
+    file: Qt.resolvedUrl( "a.json")
+    JsonLoader {
+      id: json
+      file: parent.file
+    }
+  }  
+
+  ///////// Vis
+
+  Cylinders {
+    id: lines
+    radius: 0.025
+
+    positions: {
+      var arrays = (json.output.lines || []).map( function(v) { return [ v[0],v[1],v[2], v[3],v[4],v[5] ]; } )
+      var merged = [].concat.apply([], arrays);
+      return merged;
+    }
+    
+    colors: {
+      //var arrays = (json.output.lines || []).map( function(v) { return [ v[6],v[7],v[8], v[6],v[7],v[8] ]; } )
+      var arrays = (json.output.lines || []).map( function(v) { return [ v[6],v[7],v[8] ]; } )
+      var merged = [].concat.apply([], arrays);
+      console.log("setting colors",merged);
+      return merged;
+    }    
+  }
+
+  Repeater {
+    model: (json.output.text || []).length
+    TextSprite {
+      text: json.output.text[ index ][3]
+      center: [ json.output.text[ index ][0],json.output.text[ index ][1],json.output.text[ index ][2] ]
+      centered: false
+      texOffset: [-0.5,0.45]
+      texSize: [512,256]
+      bold: true
+    }
+  }
+
+}
